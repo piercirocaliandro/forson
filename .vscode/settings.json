@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.tcc": "c",
+        "limits": "c",
+        "numeric": "c",
+        "ranges": "c",
+        "streambuf": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "*.inc": "c",
+        "algorithm": "c"
+    }
+}
