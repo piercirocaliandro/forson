@@ -124,6 +124,19 @@ xmalloc(size_t size)
 		return m;
 }
 
+/*WRAPPER FUNCTION FOR MALLOC, CHECKING IT DOES NOT RETURN ZERO*/
+void *
+xcalloc(size_t nmemb, size_t elem_sz){
+	void *m;
+	m = calloc(nmemb, elem_sz);
+
+	if(m==NULL){
+		error(UNEXPECTED_ERROR, 0, "%s", "unexpected error: out of memory (xcalloc)");
+		return NULL;
+	}else	
+		return m;
+}
+
 /*DISPLAYS VERSION INFORMATION. USED WITH -v, --version OPTION*/
 void
 print_version()

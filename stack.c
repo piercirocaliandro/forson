@@ -26,10 +26,8 @@ initialize_new_stack()
 {
 	stack *new_stack = NULL;
 
-	new_stack = xmalloc(sizeof(stack));
-	memset(new_stack, 0, sizeof(stack));
-	new_stack->buffer = (symbol_id *) xmalloc(STACK_FRAGMENT_SIZE * sizeof(symbol_id));
-	memset(new_stack->buffer, 0, STACK_FRAGMENT_SIZE * sizeof(symbol_id));
+	new_stack = xcalloc(1, sizeof(stack));
+	new_stack->buffer = xcalloc(1, sizeof(symbol_id *));
 
 	return new_stack;
 }
@@ -51,18 +49,22 @@ pop(stack *st)
 
 	st->size--;
 
-	fragment = st->size/(STACK_FRAGMENT_SIZE-1);
-	offset = st->size%(STACK_FRAGMENT_SIZE-1);
+	// fragment = st->size/(STACK_FRAGMENT_SIZE-1);
+	// offset = st->size%(STACK_FRAGMENT_SIZE-1);
 
-	buf = st->buffer;
+	buf = st->buffer[st->size];
 
-	while(fragment-- > 0)
-	{
-		assert(buf != NULL);
-		buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
-	}
+	// while(fragment-- > 0)
+	// {
+	// 	assert(buf != NULL);
+	// 	buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
+	// 	printf("buf=%lu\tcontent=%d\n", buf, *buf);
+	// }
 
-	return buf[offset];
+	// return buf[offset];
+	int ret = *buf;
+	free(buf);
+	return ret;
 }
 
 
@@ -76,33 +78,29 @@ push(stack *st, symbol_id symb)
 	assert(st != NULL);
 	assert(symb != (symbol_id) 0);
 
-	fragment = st->size/(STACK_FRAGMENT_SIZE-1);
-	offset = st->size%(STACK_FRAGMENT_SIZE-1);
+	// fragment = st->size/(STACK_FRAGMENT_SIZE-1);
+	// offset = st->size%(STACK_FRAGMENT_SIZE-1);
 
 
-	buf = st->buffer;
-	while(fragment-- > 0)
-	{
+	// buf = st->buffer;
+	// while(fragment-- > 0)
+	// {
 
-		buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
-		assert(buf != NULL);
-	}
+	// 	buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
+	// 	assert(buf != NULL);
+	// }
 
-	if(buf[STACK_FRAGMENT_SIZE-1]==0)
-	{
-		//printf("xmalloc begin\n");
-		buf[STACK_FRAGMENT_SIZE-1] = (symbol_id) xmalloc(STACK_FRAGMENT_SIZE * sizeof(symbol_id));
-		//printf("xmalloc end\n");
-		memset((symbol_id *)buf[STACK_FRAGMENT_SIZE-1], 0, STACK_FRAGMENT_SIZE * sizeof(symbol_id));
-		//printf("memset end\n");
-		// buf[STACK_FRAGMENT_SIZE-1] = (symbol_id) calloc(STACK_FRAGMENT_SIZE, sizeof(symbol_id));
-		// if(buf[STACK_FRAGMENT_SIZE-1] == 0)
-		// {
-		// 	error(UNEXPECTED_ERROR, 0, "%s", "unexpected error: out of memory");
-		// }
-	}
-	buf[offset] = symb;
-	st->size++;	
+	// if(buf[STACK_FRAGMENT_SIZE-1]==0)
+	// {
+	// 	buf[STACK_FRAGMENT_SIZE-1] = xcalloc(STACK_FRAGMENT_SIZE, sizeof(symbol_id));
+	// }
+
+	st->size++;
+	st->buffer = realloc(st->buffer, sizeof(symbol_id *) * st->size);
+	st->buffer[st->size - 1] = xcalloc(1, sizeof(symbol_id));
+	buf = st->buffer[st->size - 1];
+	*buf = symb;
+	
 
 	return st->size;
 }
@@ -122,10 +120,14 @@ int clean_stack(stack *st)
 {
 	assert(st != NULL);
 
-	if(st->buffer != NULL)
-	{
-		clean_buffer(st->buffer);
+	// if(st->buffer != NULL)
+	// {
+	// 	clean_buffer(st->buffer);
+	// }
+	for (int i = 0; i < st->size; i++){
+		free(st->buffer[i]);
 	}
+	free(st->buffer);
 	free(st);
 }
 

@@ -9,6 +9,8 @@
         "type_traits": "c",
         "utility": "c",
         "*.inc": "c",
-        "algorithm": "c"
+        "algorithm": "c",
+        "generation.h": "c",
+        "exception": "c"
     }
 }

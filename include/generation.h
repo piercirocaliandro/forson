@@ -42,7 +42,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /*INTERNAL PARAMETER FOR 'RULE' ABSTRACT DATA TYPE*/
 #define RULE_FRAGMENT_SIZE 32
-#define STACK_FRAGMENT_SIZE 2
+#define STACK_FRAGMENT_SIZE 1
 
 /*COSTANTS FOR DEFAULT PROGRAM BEHAVIOR*/
 #define DEFAULT_VERBOSITY 0
@@ -95,7 +95,7 @@ typedef symbol_id rule_t;
 /*TYPE FOR STACK IMPLEMENTATION*/
 typedef struct STK
 {
-	symbol_id *buffer;
+	symbol_id **buffer;
 	int size;
 } stack;
 
@@ -242,6 +242,7 @@ int read_number(char *string);
 FILE *open_file_read(char *string);
 FILE *open_file_write(char *string);
 void *xmalloc(size_t size);
+void *xcalloc(size_t nmemb, size_t elem_sz);
 void print_version();
 void print_usage();
 

@@ -40,7 +40,7 @@ initialize_new_symbol_list()
 	memset(s, 0, sizeof(symbol_list_entry));
 	/*IN HEAD NODE 'rules' IS USED AS TAIL POINTER;*/
 	/*         'rulecount' IS USED AS NODE COUNTER;*/
-	s->rules = (rule_list_entry *) s;
+	s->rules = (rule_list_entry *) s;		// let it point to itself
 	s->name = xmalloc(strlen(str));
 	strcpy(s->name, str);
 	
@@ -766,7 +766,7 @@ clean_symbol_list(symbol_list_entry *l)
 		free(((lexicon_argz_structure *)l->rules)->argz);
 
 	if(must_print_message(CLEAN_MAX))
-		fprintf(message_stream, "freeing symbol_list_entry ADDRESS: %d, ID: %d, NAME: %s\n", (int)l, l->id, l->name);
+		fprintf(message_stream, "freeing symbol_list_entry ADDRESS: %p, ID: %d, NAME: %s\n", l, l->id, l->name);
 
 	free(l->name);
 	free(l);	
@@ -782,7 +782,7 @@ clean_rle_list(rule_list_entry *l)
 	if (l->next != NULL)
 		clean_rle_list(l->next);
 	if(must_print_message(CLEAN_MAX))
-		fprintf(message_stream, "freeing rule_list_entry at ADDRESS: %d\n", (int)l);
+		fprintf(message_stream, "freeing rule_list_entry at ADDRESS: %p\n", l);
 
 	if(l->rule != 0)
 	{

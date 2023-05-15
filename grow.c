@@ -94,7 +94,6 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 	st = initialize_new_stack();
 
 	push(st, starting_symbol);
-	
 	current = pop(st);
 
 	while(current != 0)
@@ -250,7 +249,7 @@ rule_list_entry
 
 		if(must_print_message(GENERATION))
 		{
-			fprintf(message_stream, "...Choose returning the only rule (address): %d \n", (int) r);
+			fprintf(message_stream, "...Choose returning the only rule (address): %p\n", r);
 		}
 		return r;
 	}
@@ -276,7 +275,7 @@ rule_list_entry
 	assert(r != NULL);
 	if(must_print_message(GENERATION))
 	{
-		fprintf(message_stream, "...Choose returning rule (address): %d \n", (int) r);
+		fprintf(message_stream, "...Choose returning rule (address): %p\n", r);
 	}
 	return r;
 }

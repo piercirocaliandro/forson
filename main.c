@@ -299,7 +299,10 @@ main(int argc, char **argv)
 	{
 		for(j=0; j < repeat; j++)
 		{
-			grow(starting_symbol, symbol_table);
+			symbol_list_entry* test_sle = get_symbol_by_name(symbol_table, "sub");
+			symbol_id test_symb = test_sle->id;
+			// grow(starting_symbol, symbol_table);
+			grow(test_symb, symbol_table);
 			if(j < repeat-1)
 				fprintf(output_stream, sentence_separator);
 		}

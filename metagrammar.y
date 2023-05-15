@@ -55,7 +55,7 @@ extern int yylineno;
 
 %}
 
-%error-verbose
+%define parse.error verbose
 %expect 2
 %locations
 
