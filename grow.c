@@ -96,6 +96,7 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 	push(st, starting_symbol);
 	current = pop(st);
 
+	int added_rules = 0;
 	while(current != 0)
 	{	
 		symbol_list_entry *sle = NULL;
@@ -113,9 +114,16 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 		if(is_NT(sle) == 1)
 		{
 			sle->visited--;
-			rle = get_random_rle(sle);
+			if(added_rules < GENERATION_THRESHOLD){
+				rle = get_random_rle(sle);
+				added_rules++;
+			}
+			else
+				rle = get_terminal_rle(sle);
+			
 			assert(rle != NULL);
 			push_rule_on_stack(st, rle, symbol_table);
+			
 		}
 		else
 		{
@@ -128,6 +136,7 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 
 		current = pop(st);
 	}
+	printf("\nNumber of pushed rules: %d\n", added_rules);
 	clean_stack(st);
 }
 
@@ -437,6 +446,27 @@ get_random_rle(symbol_list_entry *sle)
 		}
 	}
 	/*THIS SHOULD NOT HAPPEN*/
+	return NULL;
+}
+
+/*GETS A RULE THAT EXPANDS IN ATERMINAL SYMBOL*/
+rule_list_entry *
+get_terminal_rle(symbol_list_entry *sle){
+	int i;
+
+	assert(sle != NULL);
+	assert(is_NT(sle) == 1);
+	assert(sle->rulecount != 0);
+
+	for(i = 1; i <= sle->rulecount; i++){
+		rule_list_entry *rle = get_rle(sle, i);
+		assert (rle != NULL);
+
+		if (rle->type == TERMINAL){
+			return rle;
+		}
+	}
+
 	return NULL;
 }
 

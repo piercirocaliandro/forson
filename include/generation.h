@@ -42,7 +42,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 /*INTERNAL PARAMETER FOR 'RULE' ABSTRACT DATA TYPE*/
 #define RULE_FRAGMENT_SIZE 32
-#define STACK_FRAGMENT_SIZE 1
+#define GENERATION_THRESHOLD 3
+#define STACK_DEFAULT_SIZE 4
 
 /*COSTANTS FOR DEFAULT PROGRAM BEHAVIOR*/
 #define DEFAULT_VERBOSITY 0
@@ -97,6 +98,7 @@ typedef struct STK
 {
 	symbol_id **buffer;
 	int size;
+	int stack_size;
 } stack;
 
 /*LIST TYPE FOR MULTIPLE RULE DEFINITION OF NON TERMINALS*/
@@ -142,6 +144,7 @@ typedef struct LEX
 
 /*GENERATION FUNCTIONS*/
 rule_list_entry *get_random_rle(symbol_list_entry *sle);
+rule_list_entry *get_terminal_rle(symbol_list_entry *sle);
 rule_list_entry *choose(symbol_list_entry *sle, symbol_list_entry *symbol_table);
 rule_list_entry *get_unvisited_rle(symbol_list_entry *sle);
 rule_list_entry *get_with_deep_unvisited_rle(symbol_list_entry *sle, symbol_list_entry *symbol_table);
@@ -225,7 +228,6 @@ symbol_id pop(stack *st);
 int push(stack *st, symbol_id symb);
 int get_size(stack *st);
 int clean_stack(stack *st);
-int clean_buffer(symbol_id *buf);
 
 /*LEXICON ARGZ STRUCTURE RELATED FUNCTIONS*/
 lexicon_argz_structure *initialize_new_lexicon_argz_structure();

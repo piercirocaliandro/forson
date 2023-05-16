@@ -36,7 +36,7 @@ triple_instruction: single_instruction ' ' double_instruction
     | double_instruction ' ' single_instruction
 ;
 
-add: ADD '-' sub 
+add: ADD '-' sub
     | ADD;
 
 sub: SUB '-' add

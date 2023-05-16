@@ -27,7 +27,8 @@ initialize_new_stack()
 	stack *new_stack = NULL;
 
 	new_stack = xcalloc(1, sizeof(stack));
-	new_stack->buffer = xcalloc(1, sizeof(symbol_id *));
+	new_stack->buffer = xcalloc(STACK_DEFAULT_SIZE, sizeof(symbol_id *));
+	new_stack->stack_size = STACK_DEFAULT_SIZE;
 
 	return new_stack;
 }
@@ -49,19 +50,8 @@ pop(stack *st)
 
 	st->size--;
 
-	// fragment = st->size/(STACK_FRAGMENT_SIZE-1);
-	// offset = st->size%(STACK_FRAGMENT_SIZE-1);
-
 	buf = st->buffer[st->size];
 
-	// while(fragment-- > 0)
-	// {
-	// 	assert(buf != NULL);
-	// 	buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
-	// 	printf("buf=%lu\tcontent=%d\n", buf, *buf);
-	// }
-
-	// return buf[offset];
 	int ret = *buf;
 	free(buf);
 	return ret;
@@ -78,25 +68,13 @@ push(stack *st, symbol_id symb)
 	assert(st != NULL);
 	assert(symb != (symbol_id) 0);
 
-	// fragment = st->size/(STACK_FRAGMENT_SIZE-1);
-	// offset = st->size%(STACK_FRAGMENT_SIZE-1);
-
-
-	// buf = st->buffer;
-	// while(fragment-- > 0)
-	// {
-
-	// 	buf = (symbol_id *) buf[STACK_FRAGMENT_SIZE-1];
-	// 	assert(buf != NULL);
-	// }
-
-	// if(buf[STACK_FRAGMENT_SIZE-1]==0)
-	// {
-	// 	buf[STACK_FRAGMENT_SIZE-1] = xcalloc(STACK_FRAGMENT_SIZE, sizeof(symbol_id));
-	// }
-
 	st->size++;
-	st->buffer = realloc(st->buffer, sizeof(symbol_id *) * st->size);
+	if(st->size - 1 >= st->stack_size){
+		// double the size
+		st->buffer = realloc(st->buffer, sizeof(symbol_id *) * st->stack_size * 2);
+		st->stack_size *= 2;
+	}
+	
 	st->buffer[st->size - 1] = xcalloc(1, sizeof(symbol_id));
 	buf = st->buffer[st->size - 1];
 	*buf = symb;
@@ -120,28 +98,10 @@ int clean_stack(stack *st)
 {
 	assert(st != NULL);
 
-	// if(st->buffer != NULL)
-	// {
-	// 	clean_buffer(st->buffer);
-	// }
 	for (int i = 0; i < st->size; i++){
 		free(st->buffer[i]);
 	}
 	free(st->buffer);
 	free(st);
-}
-
-
-/*FREES MEMORY USED BUFFERS OF THE STACK STRUCTURE, RECURSIVELY*/
-int clean_buffer(symbol_id *buf)
-{
-	assert(buf != NULL);
-
-	if((symbol_id *)buf[STACK_FRAGMENT_SIZE-1] != NULL)
-	{
-		clean_buffer((symbol_id *)buf[STACK_FRAGMENT_SIZE-1]);
-	}
-
-	free(buf);
 }
 
