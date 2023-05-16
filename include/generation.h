@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #define RULE_FRAGMENT_SIZE 32
 #define GENERATION_THRESHOLD 3
 #define STACK_DEFAULT_SIZE 4
+#define PARSE_TREE_DEFAULT_CHILDREN_NUM 3
 
 /*COSTANTS FOR DEFAULT PROGRAM BEHAVIOR*/
 #define DEFAULT_VERBOSITY 0
@@ -138,6 +139,15 @@ typedef struct LEX
 	size_t argz_size;
 } lexicon_argz_structure;
 
+
+/*PARSE TREE STRUCTURE*/
+typedef struct PARSE_TREE{
+	symbol_id sym;
+	int num_children;
+	int children_array_size;
+	struct PARSE_TREE **children;
+} parse_tree;
+
 /*-------------------*/
 /*FUNCTION DEFINITION*/
 /*-------------------*/
@@ -151,7 +161,7 @@ rule_list_entry *get_with_deep_unvisited_rle(symbol_list_entry *sle, symbol_list
 int rle_minimal_length(rule_list_entry *rle, symbol_list_entry *symbol_table);
 int symbol_minimal_length(symbol_list_entry *sle, symbol_list_entry *symbol_table);
 rule_list_entry *get_shortest_rle(symbol_list_entry *sle, symbol_list_entry *symbol_table);
-void push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table);
+void push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table, parse_tree *tree);
 
 void generate_terminal_text(symbol_list_entry *s);
 void print_string(char *point);
@@ -253,3 +263,9 @@ void clean_symbol_list(symbol_list_entry *l);
 void clean_rle_list(rule_list_entry *l);
 void clean_rule(rule_t *r);
 void clean_up(void);
+
+/*PARSE TREE FUNCTIONS*/
+parse_tree *init_parse_tree(symbol_id sym);
+parse_tree *init_empty_parse_tree(void);
+int parse_tree_push_child(parse_tree *tree, symbol_id sym);
+void parse_tree_clean(parse_tree *tree);

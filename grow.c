@@ -81,6 +81,7 @@ void
 grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 {
 	stack *st;
+	parse_tree *pt, *current_tree;
 	symbol_id current = (symbol_id) 0;
 	
 	/*OPTIONAL MESSAGE PRINTING FOR EXECUTION TRACING*/
@@ -92,6 +93,9 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 	assert(starting_symbol != (symbol_id) 0);
 
 	st = initialize_new_stack();
+	pt = init_parse_tree(starting_symbol);
+	current_tree = pt;
+	printf("Parse tree at address: %p - %p\n", current_tree, pt);
 
 	push(st, starting_symbol);
 	current = pop(st);
@@ -122,7 +126,7 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 				rle = get_terminal_rle(sle);
 			
 			assert(rle != NULL);
-			push_rule_on_stack(st, rle, symbol_table);
+			push_rule_on_stack(st, rle, symbol_table, current_tree);
 			
 		}
 		else
@@ -135,15 +139,27 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 		}
 
 		current = pop(st);
+		/*
+		TODO: find a way to update 'current_tree' properly
+		maybe a valid solution could be keeping a reference to the parent into the parse tree struct and
+		when a terminal value is reached, marking the node as visisted and go into the next not visited into the 
+		children list of the parent
+		*/
+		//current_tree = current_tree->children[current_tree->num_children - 1];
 	}
 	printf("\nNumber of pushed rules: %d\n", added_rules);
+	printf("Tree root: (%s)\n", get_symbol(symbol_table, pt->sym)->name);
+	for(int j = 0; j<pt->num_children; j++){
+		printf("(%s)  ", get_symbol(symbol_table, pt->children[j]->sym)->name);
+	}
+	printf("\n");
 	clean_stack(st);
 }
 
 
 /*PUSH ALL SYMBOLS IN RULE rle IN STACK st, FROM RIGHT TO LEFT*/
 void
-push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table)
+push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table, parse_tree *tree)
 {
 	int i;
 
@@ -161,6 +177,11 @@ push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_ta
 		sle = get_symbol(symbol_table, s);
 		assert(sle != NULL);
 
+		// parse tree management
+		if(tree != NULL){
+			parse_tree_push_child(tree, s);
+		}
+
 		if(is_NT(sle) == 1)
 		{
 			sle->visited++;
@@ -169,6 +190,7 @@ push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_ta
 		push(st, s);
 	}
 }
+
 
 
 /*IMPLEMENTATION OF THE PURDOM ALGORITHM                                */
@@ -215,7 +237,7 @@ purdom(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 			rle->visited++;
 			sle->visited--;
 
-			push_rule_on_stack(st, rle, symbol_table);
+			push_rule_on_stack(st, rle, symbol_table, NULL);
 		}
 		else
 		{

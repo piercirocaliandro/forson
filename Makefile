@@ -1,4 +1,4 @@
-OBJS = main.o grow.o build_tables.o listops.o stack.o utilities.o print_tables.o metagrammar.yylex.o metagrammar.tab.o lexicon.yylex.o
+OBJS = main.o grow.o build_tables.o listops.o stack.o utilities.o print_tables.o parse_tree.o metagrammar.yylex.o metagrammar.tab.o lexicon.yylex.o
 
 CFLAGS += -I./include -I. -g
 
@@ -45,6 +45,9 @@ utilities.o : utilities.c include/generation.h
 
 print_tables.o :print_tables.c include/generation.h
 	gcc $(CFLAGS) -c print_tables.c 
+
+parse_tree.o :parse_tree.c include/generation.h
+	gcc $(CFLAGS) -c parse_tree.c
 
 clean : 
 	rm -f gen $(OBJS) *.yylex.* *.tab.* forson
