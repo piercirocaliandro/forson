@@ -74,6 +74,22 @@ grow_shortest(symbol_list_entry *sle, symbol_list_entry *symbol_table)
 	}
 }
 
+tree_node* get_current_tree(tree_node* node){
+	assert(node!=NULL);
+	tree_node ** children = node->children;
+	if(node->num_children==0){
+		return node->parent;
+	}
+	int i;
+	for(i=0; i < node->num_children; i++){
+		tree_node* child = children[i];
+		if(child->expanded==0){
+			child->expanded=1;
+			return child;
+		}
+	}
+	return node->parent;
+}
 
 /*IMPLEMENTATION OF THE GROW ALGORITHM. */
 /*GENERATES A SINGLE SINTACTICALLY VALID SENTENCE OF THE TARGET GRAMMAR */
@@ -81,7 +97,8 @@ void
 grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 {
 	stack *st;
-	parse_tree *pt, *current_tree;
+	parse_tree* pt;
+	tree_node *current_tree;
 	symbol_id current = (symbol_id) 0;
 	
 	/*OPTIONAL MESSAGE PRINTING FOR EXECUTION TRACING*/
@@ -94,7 +111,7 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 
 	st = initialize_new_stack();
 	pt = init_parse_tree(starting_symbol);
-	current_tree = pt;
+	current_tree = pt->root;
 	printf("Parse tree at address: %p - %p\n", current_tree, pt);
 
 	push(st, starting_symbol);
@@ -136,9 +153,11 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 			if(no_spaces_flag == 0){
 				generate_blank_text();
 			}
+			current_tree = get_current_tree(current_tree);
 		}
 
 		current = pop(st);
+		current_tree = get_current_tree(current_tree);
 		/*
 		TODO: find a way to update 'current_tree' properly
 		maybe a valid solution could be keeping a reference to the parent into the parse tree struct and
@@ -148,23 +167,24 @@ grow(symbol_id starting_symbol, symbol_list_entry *symbol_table)
 		//current_tree = current_tree->children[current_tree->num_children - 1];
 	}
 	printf("\nNumber of pushed rules: %d\n", added_rules);
-	printf("Tree root: (%s)\n", get_symbol(symbol_table, pt->sym)->name);
-	for(int j = 0; j<pt->num_children; j++){
-		printf("(%s)  ", get_symbol(symbol_table, pt->children[j]->sym)->name);
-	}
 	printf("\n");
+	print_tree(pt->root,symbol_table);
 	clean_stack(st);
+	parse_tree_clean(pt);
 }
+
 
 
 /*PUSH ALL SYMBOLS IN RULE rle IN STACK st, FROM RIGHT TO LEFT*/
 void
-push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table, parse_tree *tree)
+push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_table, tree_node *tree)
 {
 	int i;
 
 	assert(st != NULL);
 	assert(rle != NULL);
+
+	symbol_id the_syms[rle->length];
 
 	for(i = rle->length-1; i >= 0; i--)
 	{
@@ -179,7 +199,7 @@ push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_ta
 
 		// parse tree management
 		if(tree != NULL){
-			parse_tree_push_child(tree, s);
+			the_syms[i]=s;
 		}
 
 		if(is_NT(sle) == 1)
@@ -188,6 +208,12 @@ push_rule_on_stack(stack *st, rule_list_entry *rle, symbol_list_entry *symbol_ta
 		}
 
 		push(st, s);
+	}
+
+	if(tree!=NULL){
+		for (i=0; i < rle->length; i++){
+			tree_node_push_child(tree, the_syms[i]);
+		}
 	}
 }
 

@@ -11,6 +11,7 @@
         "*.inc": "c",
         "algorithm": "c",
         "generation.h": "c",
-        "exception": "c"
+        "exception": "c",
+        "stdlib.h": "c"
     }
 }

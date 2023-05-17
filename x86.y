@@ -37,14 +37,16 @@ triple_instruction: single_instruction ' ' double_instruction
 ;
 
 add: ADD '-' sub
-    | ADD;
+    | ADD
+    | ADD garbage;
 
 sub: SUB '-' add
     | MUL '-' sub '-' DIV
     | DIV '-' add '-' MUL
-    | SUB;
+    | SUB
+    | SUB garbage;
 
-garbage: garbage ' ' NOP
+garbage: garbage '-' NOP
     | NOP
 ;
 
