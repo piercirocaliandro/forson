@@ -1,6 +1,6 @@
-#line 2 "lexicon.yylex.c"
+#line 1 "lexicon.yylex.c"
 
-#line 4 "lexicon.yylex.c"
+#line 3 "lexicon.yylex.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -781,9 +781,9 @@ extern symbol_id current_symbol_for_lexicon;
 extern FILE *message_stream;
 extern symbol_list_entry *symbol_table;
 
-#line 785 "lexicon.yylex.c"
+#line 784 "lexicon.yylex.c"
 
-#line 787 "lexicon.yylex.c"
+#line 786 "lexicon.yylex.c"
 
 #define INITIAL 0
 #define in_association 1
@@ -1004,7 +1004,7 @@ YY_DECL
 #line 50 "lexicon.lex"
 
 
-#line 1008 "lexicon.yylex.c"
+#line 1007 "lexicon.yylex.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1199,7 +1199,7 @@ YY_RULE_SETUP
 #line 143 "lexicon.lex"
 ECHO;
 	YY_BREAK
-#line 1203 "lexicon.yylex.c"
+#line 1202 "lexicon.yylex.c"
 
 	case YY_END_OF_BUFFER:
 		{

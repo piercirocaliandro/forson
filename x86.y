@@ -28,7 +28,7 @@ single_instruction: add { $$ = $1 }
     | garbage
 ;
 
-double_instruction: single_instruction ' ' single_instruction
+double_instruction: single_instruction ' ' single_instruction{INST="xor"}
 ;
 
 triple_instruction: single_instruction ' ' double_instruction

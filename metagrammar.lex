@@ -275,8 +275,13 @@ error			{
 					MESSAGE_WITHOUT("entering COMMENT in BRACKETS...");
 				BEGIN(in_comment);
 			}
-<in_curly_brackets>[^{}] 	/*EAT ANYTHING IN CURLY BRACKETS EXCEPT BRACKETS*/
-
+<in_curly_brackets>[A-Z]+=.+[}] {
+				if(must_print_message(G_SCANNER))
+					MESSAGE_WITHOUT(yytext);
+                brack_nesting--;
+                BEGIN(0);
+                return SET_SYM_VAL; 
+    } 	/*EAT ANYTHING IN CURLY BRACKETS EXCEPT BRACKETS*/
 
 <in_curly_brackets>[{]	{
 				brack_nesting++;

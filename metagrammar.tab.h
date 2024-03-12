@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.5.1.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -31,8 +31,9 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Undocumented macros, especially those whose name start with YY_,
-   are private implementation details.  Do not rely on them.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_METAGRAMMAR_TAB_H_INCLUDED
 # define YY_YY_METAGRAMMAR_TAB_H_INCLUDED
@@ -44,22 +45,28 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
   enum yytokentype
   {
-    IDENTIFIER = 258,
-    DOUBLE_QUOTED_LITERAL = 259,
-    SINGLE_QUOTED_LITERAL = 260,
-    PART_SEPARATOR = 261,
-    START_DECL = 262,
-    TOKEN_DECL = 263,
-    MISCELLANEOUS_DECL = 264,
-    MISCELLANEOUS_EMPTY_DECL = 265,
-    MISCELLANEOUS_FILENAME_DECL = 266,
-    ERROR_RESERVED_TOKEN = 267
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    IDENTIFIER = 258,              /* IDENTIFIER  */
+    DOUBLE_QUOTED_LITERAL = 259,   /* DOUBLE_QUOTED_LITERAL  */
+    SINGLE_QUOTED_LITERAL = 260,   /* SINGLE_QUOTED_LITERAL  */
+    PART_SEPARATOR = 261,          /* PART_SEPARATOR  */
+    START_DECL = 262,              /* START_DECL  */
+    TOKEN_DECL = 263,              /* TOKEN_DECL  */
+    MISCELLANEOUS_DECL = 264,      /* MISCELLANEOUS_DECL  */
+    MISCELLANEOUS_EMPTY_DECL = 265, /* MISCELLANEOUS_EMPTY_DECL  */
+    MISCELLANEOUS_FILENAME_DECL = 266, /* MISCELLANEOUS_FILENAME_DECL  */
+    ERROR_RESERVED_TOKEN = 267,    /* ERROR_RESERVED_TOKEN  */
+    SET_SYM_VAL = 268              /* SET_SYM_VAL  */
   };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
@@ -86,6 +93,8 @@ struct YYLTYPE
 
 extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
+
 int yyparse (void);
+
 
 #endif /* !YY_YY_METAGRAMMAR_TAB_H_INCLUDED  */

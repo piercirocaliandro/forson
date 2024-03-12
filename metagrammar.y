@@ -66,6 +66,7 @@ extern int yylineno;
 %token START_DECL TOKEN_DECL 
 %token MISCELLANEOUS_DECL MISCELLANEOUS_EMPTY_DECL MISCELLANEOUS_FILENAME_DECL
 %token ERROR_RESERVED_TOKEN
+%token SET_SYM_VAL
 
 %%
 
@@ -350,7 +351,14 @@ rule : 		/*empty*/
 		{
 			assert($1 != 0);
 			$$ = $1;
-		};
+		}
+        | SET_SYM_VAL {
+            fprintf(message_stream, "found val %s\n", $1);
+        }
+        | component_list SET_SYM_VAL
+        {
+            fprintf(message_stream, "found val %s\n", yytext);
+        };
 
 component_list : component_list component
 		{
