@@ -28,11 +28,11 @@ single_instruction: add { $$ = $1 }
     | garbage
 ;
 
-double_instruction: single_instruction ' ' single_instruction{INST="xor"}
+double_instruction: single_instruction{INST=mov} ' ' single_instruction{INST=xor}
 ;
 
 triple_instruction: single_instruction ' ' double_instruction
-    | single_instruction ' ' single_instruction ' ' single_instruction
+    | single_instruction{INST=add} ' ' single_instruction{INST=sub} ' ' single_instruction{INST=push}
     | double_instruction ' ' single_instruction
 ;
 

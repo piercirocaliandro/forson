@@ -501,7 +501,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  24
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   55
+#define YYLAST   51
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  17
@@ -564,7 +564,7 @@ static const yytype_int16 yyrline[] =
      118,   119,   124,   130,   131,   132,   138,   144,   155,   161,
      162,   164,   201,   246,   250,   255,   260,   266,   267,   268,
      270,   271,   273,   274,   276,   297,   313,   329,   347,   350,
-     355,   358,   363,   376,   391,   396,   401
+     363,   376,   380,   394,   399,   404,   409
 };
 #endif
 
@@ -599,7 +599,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-9)
+#define YYPACT_NINF (-7)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -613,12 +613,12 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      33,     4,    19,    -4,    -4,    -4,    30,    -9,    -9,    33,
-      33,    -9,    -4,    41,    -9,    -9,    -9,    13,    -9,    -9,
-      -9,    -9,    -9,    -9,    -9,    20,    26,    -9,    -9,    -9,
-      -9,    -9,    -9,    -9,    -9,    -9,    36,    -9,    36,    -9,
-      34,    32,    -9,     0,    -9,    -9,    -9,    -9,    -9,    -9,
-      -9,    -8,    -9,    16,    -9,    -9,     0,    -9,    -9,    -9
+      22,     3,     0,    -4,    -4,    -4,    23,    -7,    -7,    22,
+      22,    -7,    -4,    34,    -7,    -7,    -7,    13,    -7,    -7,
+      -7,    -7,    -7,    -7,    -7,    20,    26,    -7,    -7,    -7,
+      -7,    -7,    -7,    -7,    -7,    -7,    39,    -7,    39,    -7,
+      28,     7,    -7,    16,    -7,    -7,    -7,    -7,    -7,    -7,
+       8,    -7,    16,    32,    -7,    16,    33,    -7,    -7,    -7
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -630,24 +630,24 @@ static const yytype_int8 yydefact[] =
        9,    17,    30,    21,    26,    25,    24,    30,    20,    23,
       31,    27,    28,    29,     1,     0,    12,    11,    10,    16,
       22,    19,    18,     3,    15,    14,     0,    35,     4,    33,
-       0,     0,    32,    38,     8,     7,     5,    44,    46,    40,
-      45,     0,    37,    39,    43,    34,    38,    41,    42,    36
+       0,     0,    32,    38,     8,     7,     5,    44,    46,    45,
+       0,    37,    39,    42,    34,    38,    40,    43,    36,    41
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -9,    -9,    -9,    -9,    -9,    -9,    38,    -9,    -9,    -9,
-      24,    -9,    35,    -2,    25,    -3,    -9,    15,    -9,    -9,
-      -1,    -9,     1
+      -7,    -7,    -7,    -7,    -7,    -7,    31,    -7,    -7,    -7,
+      18,    -7,    30,    -2,    24,    -3,    -7,    10,    -7,    -7,
+      -6,    -7,    -1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
        0,     6,    25,    36,    41,    46,     7,    26,     8,    12,
-       9,    17,    18,    50,    10,    21,    38,    39,    40,    51,
-      52,    53,    54
+       9,    17,    18,    49,    10,    21,    38,    39,    40,    50,
+      51,    52,    53
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -655,22 +655,22 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      19,    22,    23,    47,    14,    15,    55,    11,    56,    29,
-      20,    30,    48,    49,    32,    19,    13,    14,    15,    47,
-      14,    15,    13,    14,    15,    16,    33,    20,    48,    57,
-      24,    16,    -6,    44,     2,     3,     4,     5,    45,    37,
-       1,     2,     3,     4,     5,    14,    15,    27,    28,    43,
-      34,    35,    31,    42,    58,    59
+      19,    22,    23,    13,    14,    15,    11,    -6,    44,    29,
+      20,    30,    16,    45,    32,    19,    13,    14,    15,    47,
+      14,    15,    54,    24,    55,    16,    33,    20,    48,     1,
+       2,     3,     4,     5,     2,     3,     4,     5,    14,    15,
+      27,    28,    37,    43,    34,    57,    59,    31,    42,    58,
+      35,    56
 };
 
 static const yytype_int8 yycheck[] =
 {
-       2,     4,     5,     3,     4,     5,    14,     3,    16,    12,
-      14,    13,    12,    13,    17,    17,     3,     4,     5,     3,
-       4,     5,     3,     4,     5,    12,     6,    14,    12,    13,
-       0,    12,     0,     1,     8,     9,    10,    11,     6,     3,
-       7,     8,     9,    10,    11,     4,     5,     9,    10,    15,
-      26,    26,    17,    38,    53,    56
+       2,     4,     5,     3,     4,     5,     3,     0,     1,    12,
+      14,    13,    12,     6,    17,    17,     3,     4,     5,     3,
+       4,     5,    14,     0,    16,    12,     6,    14,    12,     7,
+       8,     9,    10,    11,     8,     9,    10,    11,     4,     5,
+       9,    10,     3,    15,    26,    13,    13,    17,    38,    55,
+      26,    52
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -681,8 +681,8 @@ static const yytype_int8 yystos[] =
       31,     3,    26,     3,     4,     5,    12,    28,    29,    30,
       14,    32,    32,    32,     0,    19,    24,    23,    23,    32,
       30,    29,    32,     6,    27,    31,    20,     3,    33,    34,
-      35,    21,    34,    15,     1,     6,    22,     3,    12,    13,
-      30,    36,    37,    38,    39,    14,    16,    13,    39,    37
+      35,    21,    34,    15,     1,     6,    22,     3,    12,    30,
+      36,    37,    38,    39,    14,    16,    39,    13,    37,    13
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
@@ -692,7 +692,7 @@ static const yytype_int8 yyr1[] =
       23,    23,    23,    24,    24,    24,    25,    26,    27,    28,
       28,    29,    29,    29,    29,    30,    30,    31,    31,    31,
       32,    32,    33,    33,    34,    35,    36,    36,    37,    37,
-      37,    37,    38,    38,    39,    39,    39
+      38,    38,    38,    38,    39,    39,    39
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
@@ -702,7 +702,7 @@ static const yytype_int8 yyr2[] =
        2,     2,     2,     0,     2,     2,     3,     1,     3,     2,
        1,     1,     2,     1,     1,     1,     1,     2,     2,     2,
        0,     1,     2,     1,     4,     1,     3,     1,     0,     1,
-       1,     2,     2,     1,     1,     1,     1
+       2,     3,     1,     2,     1,     1,     1
 };
 
 
@@ -1902,23 +1902,7 @@ yyreduce:
 #line 1903 "metagrammar.tab.c"
     break;
 
-  case 40: /* rule: SET_SYM_VAL  */
-#line 355 "metagrammar.y"
-                      {
-            fprintf(message_stream, "found val %s\n", yyvsp[0]);
-        }
-#line 1911 "metagrammar.tab.c"
-    break;
-
-  case 41: /* rule: component_list SET_SYM_VAL  */
-#line 359 "metagrammar.y"
-        {
-            fprintf(message_stream, "found val %s\n", yytext);
-        }
-#line 1919 "metagrammar.tab.c"
-    break;
-
-  case 42: /* component_list: component_list component  */
+  case 40: /* component_list: component_list component  */
 #line 364 "metagrammar.y"
                 {
 			/*INSERT SYMBOL FOUND IN RULE BEING CONSTRUCTED*/
@@ -1932,11 +1916,19 @@ yyreduce:
 			if(yyval > 1)
 				yyval = 1;
 		}
-#line 1936 "metagrammar.tab.c"
+#line 1920 "metagrammar.tab.c"
     break;
 
-  case 43: /* component_list: component  */
+  case 41: /* component_list: component_list component SET_SYM_VAL  */
 #line 377 "metagrammar.y"
+        {
+            fprintf(message_stream, "found val (2) %s\n", yytext);
+        }
+#line 1928 "metagrammar.tab.c"
+    break;
+
+  case 42: /* component_list: component  */
+#line 381 "metagrammar.y"
                 {
 			/*INSERT SYMBOL FOUND IN LIST IN RULE BEING CONSTRUCTED*/
 			assert(yyvsp[0] != 0);
@@ -1950,11 +1942,19 @@ yyreduce:
 				yyval = 1;
 			
 		}
+#line 1946 "metagrammar.tab.c"
+    break;
+
+  case 43: /* component_list: component SET_SYM_VAL  */
+#line 395 "metagrammar.y"
+        {
+            fprintf(message_stream, "found val (3) %s\n", yytext);
+        }
 #line 1954 "metagrammar.tab.c"
     break;
 
   case 44: /* component: IDENTIFIER  */
-#line 392 "metagrammar.y"
+#line 400 "metagrammar.y"
                 {
 			assert(yyvsp[0] > 0);
 			yyval = yyvsp[0];
@@ -1963,7 +1963,7 @@ yyreduce:
     break;
 
   case 45: /* component: somehow_quoted_literal  */
-#line 397 "metagrammar.y"
+#line 405 "metagrammar.y"
                 {
 			assert(yyvsp[0] > 0);
 			yyval = yyvsp[0];
@@ -1972,7 +1972,7 @@ yyreduce:
     break;
 
   case 46: /* component: ERROR_RESERVED_TOKEN  */
-#line 402 "metagrammar.y"
+#line 410 "metagrammar.y"
                 {
 			assert(yyvsp[0] < 0);
 			yyval = yyvsp[0];
@@ -2210,7 +2210,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 407 "metagrammar.y"
+#line 415 "metagrammar.y"
 
 
 int yyerror(YYLTYPE *locp, char const *s)

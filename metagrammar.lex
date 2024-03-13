@@ -275,7 +275,7 @@ error			{
 					MESSAGE_WITHOUT("entering COMMENT in BRACKETS...");
 				BEGIN(in_comment);
 			}
-<in_curly_brackets>[A-Z]+=.+[}] {
+<in_curly_brackets>[A-Z]+=[a-z0-9]+[}] {
 				if(must_print_message(G_SCANNER))
 					MESSAGE_WITHOUT(yytext);
                 brack_nesting--;

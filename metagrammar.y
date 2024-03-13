@@ -352,13 +352,13 @@ rule : 		/*empty*/
 			assert($1 != 0);
 			$$ = $1;
 		}
-        | SET_SYM_VAL {
+        /*| SET_SYM_VAL {
             fprintf(message_stream, "found val %s\n", $1);
         }
         | component_list SET_SYM_VAL
         {
             fprintf(message_stream, "found val %s\n", yytext);
-        };
+        }*/;
 
 component_list : component_list component
 		{
@@ -373,6 +373,10 @@ component_list : component_list component
 			if($$ > 1)
 				$$ = 1;
 		}
+        | component_list component SET_SYM_VAL 
+        {
+            fprintf(message_stream, "found val (2) %s\n", yytext);
+        }
 		| component
 		{
 			/*INSERT SYMBOL FOUND IN LIST IN RULE BEING CONSTRUCTED*/
@@ -386,7 +390,11 @@ component_list : component_list component
 			if($$ > 1)
 				$$ = 1;
 			
-		};
+		}
+        | component SET_SYM_VAL
+        {
+            fprintf(message_stream, "found val (3) %s\n", yytext);
+        };
 
 component :	IDENTIFIER
 		{
